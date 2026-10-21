@@ -1,0 +1,16 @@
+[project]
+name = "collections-voice-agent-challenge"
+version = "0.1.0"
+description = "Resilient collections voice-agent inference service (Predixion AI x TalentX challenge)"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: starts real HTTP servers on localhost (slower)",
+]
+filterwarnings = [
+    # Raised inside starlette's TestClient with anyio >= 4.12; not our code.
+    "ignore:The anyio.abc.BlockingPortal alias is deprecated:DeprecationWarning",
+]

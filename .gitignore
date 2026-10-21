@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+
+# Local config and secrets — never commit
+.env
+*.pem
+.aws/
+
+# Local data / generated artifacts
+*.db
+*.sqlite
+*.sqlite3
+*.log
+results/
+
+# Terraform (Round 2)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!example.tfvars
+crash.log
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
