@@ -1,0 +1,10 @@
+# Never commit state: it contains resource attributes and can hold secrets.
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+terraform.tfvars
+*.tfplan
+*.plan
+tf.plan
+crash.log

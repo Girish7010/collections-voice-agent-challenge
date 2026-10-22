@@ -1,0 +1,273 @@
+{
+  "config": {
+    "target": "http://127.0.0.1:8100",
+    "mock_url": "http://127.0.0.1:8101",
+    "start": "07:30",
+    "duration_min": 180.0,
+    "compression": 60.0,
+    "rate_scale": 10.0,
+    "seed": 2026,
+    "outage_start": "09:00",
+    "outage_min": 10.0,
+    "replay": true,
+    "replay_rounds": 10,
+    "replay_wait_s": 3.0,
+    "max_outstanding": 2000,
+    "request_timeout_s": 30.0
+  },
+  "generated_at": "2026-10-21T16:26:10+00:00",
+  "summary": {
+    "calls_sent": 997,
+    "expected_calls": 1050,
+    "by_status": {
+      "processed": 892,
+      "dead_lettered": 105
+    },
+    "lost_or_errored": 0,
+    "dependency_attempts": 1134,
+    "dependency_failures": 242,
+    "initial_dependency_failure_rate": 0.2134,
+    "retries": 226,
+    "circuit_rejections": 95,
+    "final_call_failure_rate_before_replay": 0.1053,
+    "client_latency_ms": {
+      "p50": 367.9,
+      "p90": 699.9,
+      "p99": 1525.6
+    },
+    "max_in_flight_seen": 10,
+    "dlq_depth_after_run": 105,
+    "dlq_depth_after_replay": 0,
+    "replayed_ok": 105,
+    "circuit_transitions": [
+      {
+        "at": "2026-10-21T16:24:31.619+00:00",
+        "from": "closed",
+        "to": "open"
+      },
+      {
+        "at": "2026-10-21T16:24:41.652+00:00",
+        "from": "open",
+        "to": "half_open"
+      },
+      {
+        "at": "2026-10-21T16:24:41.926+00:00",
+        "from": "half_open",
+        "to": "closed"
+      }
+    ],
+    "outage": [
+      {
+        "sim_time": "09:00",
+        "real_at": "2026-10-21T16:24:30+00:00",
+        "failure_rate": 1.0
+      },
+      {
+        "sim_time": "09:10",
+        "real_at": "2026-10-21T16:24:41+00:00",
+        "failure_rate": 0.2
+      }
+    ]
+  },
+  "timeline": [
+    {
+      "sim_window": "07:30-07:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.2,
+      "sent": 18,
+      "processed": 18,
+      "dead_lettered": 0,
+      "p50_ms": 403.9,
+      "p99_ms": 1139.0
+    },
+    {
+      "sim_window": "07:45-08:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 20,
+      "dead_lettered": 1,
+      "p50_ms": 530.6,
+      "p99_ms": 786.7
+    },
+    {
+      "sim_window": "08:00-08:15",
+      "target_per_sim_min": 30.0,
+      "achieved_per_sim_min": 21.6,
+      "sent": 54,
+      "processed": 54,
+      "dead_lettered": 0,
+      "p50_ms": 405.6,
+      "p99_ms": 1730.2
+    },
+    {
+      "sim_window": "08:15-08:30",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 50.4,
+      "sent": 126,
+      "processed": 124,
+      "dead_lettered": 2,
+      "p50_ms": 377.8,
+      "p99_ms": 1021.9
+    },
+    {
+      "sim_window": "08:30-08:45",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 42.8,
+      "sent": 107,
+      "processed": 107,
+      "dead_lettered": 0,
+      "p50_ms": 370.6,
+      "p99_ms": 1278.4
+    },
+    {
+      "sim_window": "08:45-09:00",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 46.8,
+      "sent": 117,
+      "processed": 115,
+      "dead_lettered": 2,
+      "p50_ms": 387.9,
+      "p99_ms": 1160.8
+    },
+    {
+      "sim_window": "09:00-09:15",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 49.6,
+      "sent": 124,
+      "processed": 27,
+      "dead_lettered": 97,
+      "p50_ms": 391.8,
+      "p99_ms": 2326.2
+    },
+    {
+      "sim_window": "09:15-09:30",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 52.4,
+      "sent": 131,
+      "processed": 130,
+      "dead_lettered": 1,
+      "p50_ms": 337.9,
+      "p99_ms": 1803.7
+    },
+    {
+      "sim_window": "09:30-09:45",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 42.4,
+      "sent": 106,
+      "processed": 105,
+      "dead_lettered": 1,
+      "p50_ms": 305.2,
+      "p99_ms": 1319.4
+    },
+    {
+      "sim_window": "09:45-10:00",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 57.6,
+      "sent": 144,
+      "processed": 143,
+      "dead_lettered": 1,
+      "p50_ms": 422.7,
+      "p99_ms": 1475.9
+    },
+    {
+      "sim_window": "10:00-10:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.4,
+      "sent": 26,
+      "processed": 26,
+      "dead_lettered": 0,
+      "p50_ms": 356.8,
+      "p99_ms": 2296.3
+    },
+    {
+      "sim_window": "10:15-10:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.2,
+      "sent": 23,
+      "processed": 23,
+      "dead_lettered": 0,
+      "p50_ms": 321.0,
+      "p99_ms": 1031.0
+    }
+  ],
+  "replay_rounds": [
+    {
+      "attempted": 105,
+      "resolved": 104,
+      "already_processed": 0,
+      "failed_again": 1,
+      "skipped_claimed": 0,
+      "not_found": [],
+      "stopped_reason": null,
+      "dlq_depth_before": 105
+    },
+    {
+      "attempted": 1,
+      "resolved": 1,
+      "already_processed": 0,
+      "failed_again": 0,
+      "skipped_claimed": 0,
+      "not_found": [],
+      "stopped_reason": null,
+      "dlq_depth_before": 1
+    }
+  ],
+  "service_metrics_final": {
+    "uptime_s": 190.0,
+    "in_flight": 0,
+    "max_in_flight_seen": 10,
+    "calls": {
+      "live:dead_lettered": 105,
+      "live:processed": 892,
+      "replay:dead_lettered": 1,
+      "replay:processed": 105
+    },
+    "calls_per_s": 5.804,
+    "dependency": {
+      "attempts": 1269,
+      "failures": 272,
+      "retries": 255,
+      "circuit_rejections": 95,
+      "failure_rate": 0.2143,
+      "failures_by_reason": {
+        "downstream_timeout": 270,
+        "timeout": 2
+      }
+    },
+    "final_call_failure_rate": 0.1053,
+    "latency_ms": {
+      "count": 997,
+      "p50": 336.4,
+      "p90": 654.9,
+      "p99": 1502.8,
+      "max": 2297.8
+    },
+    "circuit": {
+      "state": "closed",
+      "transitions": [
+        {
+          "at": "2026-10-21T16:24:31.619+00:00",
+          "from": "closed",
+          "to": "open"
+        },
+        {
+          "at": "2026-10-21T16:24:41.652+00:00",
+          "from": "open",
+          "to": "half_open"
+        },
+        {
+          "at": "2026-10-21T16:24:41.926+00:00",
+          "from": "half_open",
+          "to": "closed"
+        }
+      ]
+    },
+    "dlq": {
+      "depth": 0,
+      "counts": {
+        "resolved": 105
+      }
+    }
+  }
+}

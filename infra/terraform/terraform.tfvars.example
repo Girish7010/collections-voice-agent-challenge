@@ -1,0 +1,44 @@
+# Copy to terraform.tfvars and adjust. Do not commit terraform.tfvars.
+
+# The account this stack may deploy into. Terraform refuses to apply anywhere else.
+# Digits only, no dashes: "1140-9164-2196" is written 114091642196.
+allowed_account_id = "114091642196"
+
+region  = "ap-south-1"
+project = "collections-agent"
+
+# REQUIRED. Base URL of the upstream STT/LLM/TTS dependency.
+# For a smoke test against the Appendix B mock you would have to deploy the mock too;
+# this stack deliberately does not, because a mock that injects 20% 503s has no business
+# running in a real account.
+dependency_url = "https://replace-me.example.com"
+
+# Image tag in the ECR repository this stack creates. Build and push first.
+image_tag = "v0.1.0"
+
+# Configuration B from docs/cost-analysis.md: 0.5 vCPU / 1 GB, floor 2, ceiling 10.
+task_cpu      = 512
+task_memory   = 1024
+desired_count = 2
+max_capacity  = 10
+
+# Shared stores, which is what makes desired_count = 2 safe. Setting this to "sqlite"
+# with desired_count > 1 is refused by guard.tf.
+store_backend   = "dynamodb"
+ledger_ttl_days = 30
+db_threads      = 8
+
+# The dead-letter records live in DynamoDB; this queue is a separate, optional
+# replay trigger that nothing consumes yet.
+enable_replay_queue = false
+
+single_nat_gateway         = true
+log_retention_days         = 30
+enable_deletion_protection = false
+
+# Any extra APP_* settings from .env.example, without the APP_ prefix:
+# app_settings = {
+#   MAX_ATTEMPTS    = "3"
+#   MAX_CONCURRENCY = "200"
+#   CB_WINDOW       = "50"
+# }

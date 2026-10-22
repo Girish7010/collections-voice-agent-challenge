@@ -1,0 +1,1059 @@
+{
+  "config": {
+    "target": "http://127.0.0.1:8102",
+    "mock_url": "http://127.0.0.1:8103",
+    "start": "00:00",
+    "duration_min": 1440.0,
+    "compression": 240.0,
+    "rate_scale": 40.0,
+    "seed": 2026,
+    "outage_start": null,
+    "outage_min": 0,
+    "replay": true,
+    "replay_rounds": 10,
+    "replay_wait_s": 3.0,
+    "max_outstanding": 2000,
+    "request_timeout_s": 30.0
+  },
+  "generated_at": "2026-10-21T16:18:07+00:00",
+  "summary": {
+    "calls_sent": 3670,
+    "expected_calls": 3900,
+    "by_status": {
+      "processed": 3641,
+      "dead_lettered": 29
+    },
+    "lost_or_errored": 0,
+    "dependency_attempts": 4557,
+    "dependency_failures": 916,
+    "initial_dependency_failure_rate": 0.201,
+    "retries": 887,
+    "circuit_rejections": 0,
+    "final_call_failure_rate_before_replay": 0.0079,
+    "client_latency_ms": {
+      "p50": 389.8,
+      "p90": 748.6,
+      "p99": 1354.4
+    },
+    "max_in_flight_seen": 27,
+    "dlq_depth_after_run": 29,
+    "dlq_depth_after_replay": 0,
+    "replayed_ok": 29,
+    "circuit_transitions": [],
+    "outage": []
+  },
+  "timeline": [
+    {
+      "sim_window": "00:00-00:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.2,
+      "sent": 18,
+      "processed": 18,
+      "dead_lettered": 0,
+      "p50_ms": 471.4,
+      "p99_ms": 1155.2
+    },
+    {
+      "sim_window": "00:15-00:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 20,
+      "dead_lettered": 1,
+      "p50_ms": 489.6,
+      "p99_ms": 1174.6
+    },
+    {
+      "sim_window": "00:30-00:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 6.0,
+      "sent": 15,
+      "processed": 15,
+      "dead_lettered": 0,
+      "p50_ms": 404.2,
+      "p99_ms": 679.6
+    },
+    {
+      "sim_window": "00:45-01:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.2,
+      "sent": 18,
+      "processed": 18,
+      "dead_lettered": 0,
+      "p50_ms": 424.5,
+      "p99_ms": 1487.9
+    },
+    {
+      "sim_window": "01:00-01:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 21,
+      "dead_lettered": 0,
+      "p50_ms": 415.4,
+      "p99_ms": 1081.9
+    },
+    {
+      "sim_window": "01:15-01:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.0,
+      "sent": 20,
+      "processed": 20,
+      "dead_lettered": 0,
+      "p50_ms": 356.5,
+      "p99_ms": 1543.9
+    },
+    {
+      "sim_window": "01:30-01:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.2,
+      "sent": 28,
+      "processed": 28,
+      "dead_lettered": 0,
+      "p50_ms": 372.2,
+      "p99_ms": 662.2
+    },
+    {
+      "sim_window": "01:45-02:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 28,
+      "dead_lettered": 1,
+      "p50_ms": 365.1,
+      "p99_ms": 1073.1
+    },
+    {
+      "sim_window": "02:00-02:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.8,
+      "sent": 27,
+      "processed": 27,
+      "dead_lettered": 0,
+      "p50_ms": 459.7,
+      "p99_ms": 2419.7
+    },
+    {
+      "sim_window": "02:15-02:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 21,
+      "dead_lettered": 0,
+      "p50_ms": 375.5,
+      "p99_ms": 1000.1
+    },
+    {
+      "sim_window": "02:30-02:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 24,
+      "dead_lettered": 0,
+      "p50_ms": 308.1,
+      "p99_ms": 644.7
+    },
+    {
+      "sim_window": "02:45-03:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 21,
+      "dead_lettered": 0,
+      "p50_ms": 284.7,
+      "p99_ms": 1303.3
+    },
+    {
+      "sim_window": "03:00-03:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 364.6,
+      "p99_ms": 1038.1
+    },
+    {
+      "sim_window": "03:15-03:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 24,
+      "dead_lettered": 0,
+      "p50_ms": 442.8,
+      "p99_ms": 1272.8
+    },
+    {
+      "sim_window": "03:30-03:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 6.8,
+      "sent": 17,
+      "processed": 17,
+      "dead_lettered": 0,
+      "p50_ms": 366.0,
+      "p99_ms": 1069.7
+    },
+    {
+      "sim_window": "03:45-04:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 6.8,
+      "sent": 17,
+      "processed": 16,
+      "dead_lettered": 1,
+      "p50_ms": 305.2,
+      "p99_ms": 1066.9
+    },
+    {
+      "sim_window": "04:00-04:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.8,
+      "sent": 22,
+      "processed": 19,
+      "dead_lettered": 3,
+      "p50_ms": 338.2,
+      "p99_ms": 1415.0
+    },
+    {
+      "sim_window": "04:15-04:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 29,
+      "dead_lettered": 0,
+      "p50_ms": 354.5,
+      "p99_ms": 1111.7
+    },
+    {
+      "sim_window": "04:30-04:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 24,
+      "dead_lettered": 0,
+      "p50_ms": 401.7,
+      "p99_ms": 1137.8
+    },
+    {
+      "sim_window": "04:45-05:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 24,
+      "dead_lettered": 0,
+      "p50_ms": 406.4,
+      "p99_ms": 763.7
+    },
+    {
+      "sim_window": "05:00-05:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.0,
+      "sent": 30,
+      "processed": 30,
+      "dead_lettered": 0,
+      "p50_ms": 347.0,
+      "p99_ms": 2613.2
+    },
+    {
+      "sim_window": "05:15-05:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.8,
+      "sent": 27,
+      "processed": 27,
+      "dead_lettered": 0,
+      "p50_ms": 295.1,
+      "p99_ms": 790.8
+    },
+    {
+      "sim_window": "05:30-05:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.8,
+      "sent": 27,
+      "processed": 26,
+      "dead_lettered": 1,
+      "p50_ms": 465.5,
+      "p99_ms": 1408.0
+    },
+    {
+      "sim_window": "05:45-06:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 335.9,
+      "p99_ms": 980.3
+    },
+    {
+      "sim_window": "06:00-06:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 6.8,
+      "sent": 17,
+      "processed": 17,
+      "dead_lettered": 0,
+      "p50_ms": 324.0,
+      "p99_ms": 973.9
+    },
+    {
+      "sim_window": "06:15-06:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.4,
+      "sent": 26,
+      "processed": 26,
+      "dead_lettered": 0,
+      "p50_ms": 341.8,
+      "p99_ms": 1944.6
+    },
+    {
+      "sim_window": "06:30-06:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.4,
+      "sent": 26,
+      "processed": 26,
+      "dead_lettered": 0,
+      "p50_ms": 351.7,
+      "p99_ms": 1967.5
+    },
+    {
+      "sim_window": "06:45-07:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 29,
+      "dead_lettered": 0,
+      "p50_ms": 303.7,
+      "p99_ms": 1986.8
+    },
+    {
+      "sim_window": "07:00-07:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.8,
+      "sent": 27,
+      "processed": 27,
+      "dead_lettered": 0,
+      "p50_ms": 342.1,
+      "p99_ms": 717.4
+    },
+    {
+      "sim_window": "07:15-07:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.2,
+      "sent": 23,
+      "processed": 23,
+      "dead_lettered": 0,
+      "p50_ms": 280.5,
+      "p99_ms": 1076.9
+    },
+    {
+      "sim_window": "07:30-07:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 18,
+      "dead_lettered": 1,
+      "p50_ms": 283.3,
+      "p99_ms": 1265.1
+    },
+    {
+      "sim_window": "07:45-08:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 23,
+      "dead_lettered": 1,
+      "p50_ms": 403.7,
+      "p99_ms": 1998.0
+    },
+    {
+      "sim_window": "08:00-08:15",
+      "target_per_sim_min": 30.0,
+      "achieved_per_sim_min": 25.6,
+      "sent": 64,
+      "processed": 64,
+      "dead_lettered": 0,
+      "p50_ms": 415.9,
+      "p99_ms": 1285.9
+    },
+    {
+      "sim_window": "08:15-08:30",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 52.0,
+      "sent": 130,
+      "processed": 129,
+      "dead_lettered": 1,
+      "p50_ms": 338.9,
+      "p99_ms": 1024.6
+    },
+    {
+      "sim_window": "08:30-08:45",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 50.8,
+      "sent": 127,
+      "processed": 126,
+      "dead_lettered": 1,
+      "p50_ms": 461.8,
+      "p99_ms": 1079.5
+    },
+    {
+      "sim_window": "08:45-09:00",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 42.0,
+      "sent": 105,
+      "processed": 105,
+      "dead_lettered": 0,
+      "p50_ms": 411.3,
+      "p99_ms": 1637.2
+    },
+    {
+      "sim_window": "09:00-09:15",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 47.6,
+      "sent": 119,
+      "processed": 119,
+      "dead_lettered": 0,
+      "p50_ms": 407.7,
+      "p99_ms": 827.5
+    },
+    {
+      "sim_window": "09:15-09:30",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 39.2,
+      "sent": 98,
+      "processed": 98,
+      "dead_lettered": 0,
+      "p50_ms": 319.5,
+      "p99_ms": 1223.3
+    },
+    {
+      "sim_window": "09:30-09:45",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 45.6,
+      "sent": 114,
+      "processed": 112,
+      "dead_lettered": 2,
+      "p50_ms": 338.7,
+      "p99_ms": 1784.7
+    },
+    {
+      "sim_window": "09:45-10:00",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 46.0,
+      "sent": 115,
+      "processed": 113,
+      "dead_lettered": 2,
+      "p50_ms": 416.4,
+      "p99_ms": 1001.7
+    },
+    {
+      "sim_window": "10:00-10:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.8,
+      "sent": 27,
+      "processed": 26,
+      "dead_lettered": 1,
+      "p50_ms": 427.4,
+      "p99_ms": 1011.1
+    },
+    {
+      "sim_window": "10:15-10:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.0,
+      "sent": 25,
+      "processed": 25,
+      "dead_lettered": 0,
+      "p50_ms": 362.8,
+      "p99_ms": 1838.5
+    },
+    {
+      "sim_window": "10:30-10:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 29,
+      "dead_lettered": 0,
+      "p50_ms": 430.7,
+      "p99_ms": 1050.3
+    },
+    {
+      "sim_window": "10:45-11:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.8,
+      "sent": 32,
+      "processed": 32,
+      "dead_lettered": 0,
+      "p50_ms": 420.3,
+      "p99_ms": 1354.4
+    },
+    {
+      "sim_window": "11:00-11:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 29,
+      "dead_lettered": 0,
+      "p50_ms": 386.2,
+      "p99_ms": 935.5
+    },
+    {
+      "sim_window": "11:15-11:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.0,
+      "sent": 25,
+      "processed": 25,
+      "dead_lettered": 0,
+      "p50_ms": 320.7,
+      "p99_ms": 936.4
+    },
+    {
+      "sim_window": "11:30-11:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 24,
+      "dead_lettered": 0,
+      "p50_ms": 344.0,
+      "p99_ms": 1176.1
+    },
+    {
+      "sim_window": "11:45-12:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.8,
+      "sent": 32,
+      "processed": 32,
+      "dead_lettered": 0,
+      "p50_ms": 332.9,
+      "p99_ms": 886.2
+    },
+    {
+      "sim_window": "12:00-12:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.2,
+      "sent": 23,
+      "processed": 22,
+      "dead_lettered": 1,
+      "p50_ms": 419.3,
+      "p99_ms": 658.0
+    },
+    {
+      "sim_window": "12:15-12:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.0,
+      "sent": 30,
+      "processed": 30,
+      "dead_lettered": 0,
+      "p50_ms": 330.3,
+      "p99_ms": 944.1
+    },
+    {
+      "sim_window": "12:30-12:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 20,
+      "dead_lettered": 1,
+      "p50_ms": 328.3,
+      "p99_ms": 879.7
+    },
+    {
+      "sim_window": "12:45-13:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.2,
+      "sent": 23,
+      "processed": 23,
+      "dead_lettered": 0,
+      "p50_ms": 432.3,
+      "p99_ms": 2649.0
+    },
+    {
+      "sim_window": "13:00-13:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 14.0,
+      "sent": 35,
+      "processed": 34,
+      "dead_lettered": 1,
+      "p50_ms": 384.4,
+      "p99_ms": 853.1
+    },
+    {
+      "sim_window": "13:15-13:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.2,
+      "sent": 28,
+      "processed": 28,
+      "dead_lettered": 0,
+      "p50_ms": 412.6,
+      "p99_ms": 1172.7
+    },
+    {
+      "sim_window": "13:30-13:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.2,
+      "sent": 28,
+      "processed": 28,
+      "dead_lettered": 0,
+      "p50_ms": 356.7,
+      "p99_ms": 632.0
+    },
+    {
+      "sim_window": "13:45-14:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 29,
+      "dead_lettered": 0,
+      "p50_ms": 346.5,
+      "p99_ms": 1099.9
+    },
+    {
+      "sim_window": "14:00-14:15",
+      "target_per_sim_min": 30.0,
+      "achieved_per_sim_min": 24.8,
+      "sent": 62,
+      "processed": 62,
+      "dead_lettered": 0,
+      "p50_ms": 490.8,
+      "p99_ms": 1371.3
+    },
+    {
+      "sim_window": "14:15-14:30",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 39.2,
+      "sent": 98,
+      "processed": 96,
+      "dead_lettered": 2,
+      "p50_ms": 515.8,
+      "p99_ms": 2715.4
+    },
+    {
+      "sim_window": "14:30-14:45",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 42.0,
+      "sent": 105,
+      "processed": 105,
+      "dead_lettered": 0,
+      "p50_ms": 390.5,
+      "p99_ms": 1204.7
+    },
+    {
+      "sim_window": "14:45-15:00",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 54.4,
+      "sent": 136,
+      "processed": 135,
+      "dead_lettered": 1,
+      "p50_ms": 368.3,
+      "p99_ms": 1513.3
+    },
+    {
+      "sim_window": "15:00-15:15",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 44.0,
+      "sent": 110,
+      "processed": 109,
+      "dead_lettered": 1,
+      "p50_ms": 494.6,
+      "p99_ms": 1430.9
+    },
+    {
+      "sim_window": "15:15-15:30",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 44.4,
+      "sent": 111,
+      "processed": 110,
+      "dead_lettered": 1,
+      "p50_ms": 446.7,
+      "p99_ms": 1366.3
+    },
+    {
+      "sim_window": "15:30-15:45",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 44.8,
+      "sent": 112,
+      "processed": 112,
+      "dead_lettered": 0,
+      "p50_ms": 420.3,
+      "p99_ms": 1179.0
+    },
+    {
+      "sim_window": "15:45-16:00",
+      "target_per_sim_min": 50.0,
+      "achieved_per_sim_min": 49.2,
+      "sent": 123,
+      "processed": 122,
+      "dead_lettered": 1,
+      "p50_ms": 426.4,
+      "p99_ms": 1045.0
+    },
+    {
+      "sim_window": "16:00-16:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.4,
+      "sent": 31,
+      "processed": 31,
+      "dead_lettered": 0,
+      "p50_ms": 348.6,
+      "p99_ms": 1334.5
+    },
+    {
+      "sim_window": "16:15-16:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.2,
+      "sent": 23,
+      "processed": 23,
+      "dead_lettered": 0,
+      "p50_ms": 302.9,
+      "p99_ms": 1042.2
+    },
+    {
+      "sim_window": "16:30-16:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 379.1,
+      "p99_ms": 1268.7
+    },
+    {
+      "sim_window": "16:45-17:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 28,
+      "dead_lettered": 1,
+      "p50_ms": 375.6,
+      "p99_ms": 1840.0
+    },
+    {
+      "sim_window": "17:00-17:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.0,
+      "sent": 25,
+      "processed": 25,
+      "dead_lettered": 0,
+      "p50_ms": 348.9,
+      "p99_ms": 1990.4
+    },
+    {
+      "sim_window": "17:15-17:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.4,
+      "sent": 26,
+      "processed": 26,
+      "dead_lettered": 0,
+      "p50_ms": 319.2,
+      "p99_ms": 899.7
+    },
+    {
+      "sim_window": "17:30-17:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 6.8,
+      "sent": 17,
+      "processed": 17,
+      "dead_lettered": 0,
+      "p50_ms": 361.4,
+      "p99_ms": 728.6
+    },
+    {
+      "sim_window": "17:45-18:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.0,
+      "sent": 20,
+      "processed": 20,
+      "dead_lettered": 0,
+      "p50_ms": 443.5,
+      "p99_ms": 881.4
+    },
+    {
+      "sim_window": "18:00-18:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.8,
+      "sent": 22,
+      "processed": 22,
+      "dead_lettered": 0,
+      "p50_ms": 401.4,
+      "p99_ms": 811.7
+    },
+    {
+      "sim_window": "18:15-18:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.0,
+      "sent": 30,
+      "processed": 30,
+      "dead_lettered": 0,
+      "p50_ms": 412.8,
+      "p99_ms": 1009.7
+    },
+    {
+      "sim_window": "18:30-18:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 11.6,
+      "sent": 29,
+      "processed": 29,
+      "dead_lettered": 0,
+      "p50_ms": 343.7,
+      "p99_ms": 970.9
+    },
+    {
+      "sim_window": "18:45-19:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.0,
+      "sent": 20,
+      "processed": 20,
+      "dead_lettered": 0,
+      "p50_ms": 399.0,
+      "p99_ms": 920.6
+    },
+    {
+      "sim_window": "19:00-19:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.0,
+      "sent": 25,
+      "processed": 25,
+      "dead_lettered": 0,
+      "p50_ms": 423.0,
+      "p99_ms": 939.9
+    },
+    {
+      "sim_window": "19:15-19:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 5.2,
+      "sent": 13,
+      "processed": 13,
+      "dead_lettered": 0,
+      "p50_ms": 378.3,
+      "p99_ms": 856.8
+    },
+    {
+      "sim_window": "19:30-19:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.6,
+      "sent": 24,
+      "processed": 24,
+      "dead_lettered": 0,
+      "p50_ms": 344.0,
+      "p99_ms": 1240.0
+    },
+    {
+      "sim_window": "19:45-20:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.8,
+      "sent": 27,
+      "processed": 26,
+      "dead_lettered": 1,
+      "p50_ms": 360.5,
+      "p99_ms": 1026.0
+    },
+    {
+      "sim_window": "20:00-20:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 13.2,
+      "sent": 33,
+      "processed": 33,
+      "dead_lettered": 0,
+      "p50_ms": 318.7,
+      "p99_ms": 2955.5
+    },
+    {
+      "sim_window": "20:15-20:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 13.2,
+      "sent": 33,
+      "processed": 32,
+      "dead_lettered": 1,
+      "p50_ms": 427.6,
+      "p99_ms": 1226.7
+    },
+    {
+      "sim_window": "20:30-20:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 386.2,
+      "p99_ms": 839.0
+    },
+    {
+      "sim_window": "20:45-21:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.0,
+      "sent": 25,
+      "processed": 25,
+      "dead_lettered": 0,
+      "p50_ms": 428.0,
+      "p99_ms": 715.3
+    },
+    {
+      "sim_window": "21:00-21:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.8,
+      "sent": 22,
+      "processed": 22,
+      "dead_lettered": 0,
+      "p50_ms": 405.2,
+      "p99_ms": 936.5
+    },
+    {
+      "sim_window": "21:15-21:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 365.3,
+      "p99_ms": 904.6
+    },
+    {
+      "sim_window": "21:30-21:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.0,
+      "sent": 30,
+      "processed": 29,
+      "dead_lettered": 1,
+      "p50_ms": 400.4,
+      "p99_ms": 771.6
+    },
+    {
+      "sim_window": "21:45-22:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 21,
+      "dead_lettered": 0,
+      "p50_ms": 328.3,
+      "p99_ms": 1124.9
+    },
+    {
+      "sim_window": "22:00-22:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.4,
+      "sent": 26,
+      "processed": 26,
+      "dead_lettered": 0,
+      "p50_ms": 480.9,
+      "p99_ms": 1161.1
+    },
+    {
+      "sim_window": "22:15-22:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 391.5,
+      "p99_ms": 1157.9
+    },
+    {
+      "sim_window": "22:30-22:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 7.6,
+      "sent": 19,
+      "processed": 19,
+      "dead_lettered": 0,
+      "p50_ms": 293.0,
+      "p99_ms": 821.7
+    },
+    {
+      "sim_window": "22:45-23:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 10.4,
+      "sent": 26,
+      "processed": 26,
+      "dead_lettered": 0,
+      "p50_ms": 394.1,
+      "p99_ms": 653.9
+    },
+    {
+      "sim_window": "23:00-23:15",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.0,
+      "sent": 20,
+      "processed": 20,
+      "dead_lettered": 0,
+      "p50_ms": 399.9,
+      "p99_ms": 898.9
+    },
+    {
+      "sim_window": "23:15-23:30",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 8.4,
+      "sent": 21,
+      "processed": 21,
+      "dead_lettered": 0,
+      "p50_ms": 425.8,
+      "p99_ms": 1106.7
+    },
+    {
+      "sim_window": "23:30-23:45",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 12.8,
+      "sent": 32,
+      "processed": 32,
+      "dead_lettered": 0,
+      "p50_ms": 384.4,
+      "p99_ms": 831.5
+    },
+    {
+      "sim_window": "23:45-00:00",
+      "target_per_sim_min": 10.0,
+      "achieved_per_sim_min": 9.2,
+      "sent": 23,
+      "processed": 23,
+      "dead_lettered": 0,
+      "p50_ms": 444.7,
+      "p99_ms": 1111.3
+    }
+  ],
+  "replay_rounds": [
+    {
+      "attempted": 29,
+      "resolved": 29,
+      "already_processed": 0,
+      "failed_again": 0,
+      "skipped_claimed": 0,
+      "not_found": [],
+      "stopped_reason": null,
+      "dlq_depth_before": 29
+    }
+  ],
+  "service_metrics_final": {
+    "uptime_s": 364.4,
+    "in_flight": 0,
+    "max_in_flight_seen": 27,
+    "calls": {
+      "live:dead_lettered": 29,
+      "live:processed": 3641,
+      "replay:processed": 29
+    },
+    "calls_per_s": 10.152,
+    "dependency": {
+      "attempts": 4590,
+      "failures": 920,
+      "retries": 891,
+      "circuit_rejections": 0,
+      "failure_rate": 0.2004,
+      "failures_by_reason": {
+        "downstream_timeout": 912,
+        "timeout": 8
+      }
+    },
+    "final_call_failure_rate": 0.0079,
+    "latency_ms": {
+      "count": 3670,
+      "p50": 339.5,
+      "p90": 700.6,
+      "p99": 1279.0,
+      "max": 2909.0
+    },
+    "circuit": {
+      "state": "closed",
+      "transitions": []
+    },
+    "dlq": {
+      "depth": 0,
+      "counts": {
+        "resolved": 29
+      }
+    }
+  }
+}

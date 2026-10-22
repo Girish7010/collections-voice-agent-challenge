@@ -1,0 +1,65 @@
+# AWS deployment evidence
+Captured: 2026-10-22T05:15:10Z
+Account:  1140XXXXXXXX   Region: ap-south-1
+
+## Caller identity
+{
+    "UserId": "AIDARVEDEJVKEE4AEBO4E",
+    "Account": "1140XXXXXXXX",
+    "Arn": "arn:aws:iam::1140XXXXXXXX:user/User1"
+}
+
+## ECS service
+{
+    "status": "ACTIVE",
+    "desired": 2,
+    "running": 2,
+    "launchType": "FARGATE",
+    "taskDefinition": "arn:aws:ecs:ap-south-1:1140XXXXXXXX:task-definition/collections-agent:1"
+}
+
+## ALB target health
+[
+    {
+        "target": "10.40.151.196",
+        "port": 8000,
+        "state": "healthy"
+    },
+    {
+        "target": "10.40.139.24",
+        "port": 8000,
+        "state": "healthy"
+    }
+]
+
+## Autoscaling target
+{
+    "min": 2,
+    "max": 10,
+    "resource": "service/collections-agent/collections-agent"
+}
+
+## DynamoDB tables
+{
+    "name": "collections-agent-dead-letters",
+    "status": "ACTIVE",
+    "keys": [
+        {
+            "AttributeName": "event_id",
+            "KeyType": "HASH"
+        }
+    ],
+    "gsi": "status-seq-index",
+    "billing": "PAY_PER_REQUEST"
+}
+{
+    "name": "collections-agent-event-ledger",
+    "status": "ACTIVE",
+    "keys": [
+        {
+            "AttributeName": "event_id",
+            "KeyType": "HASH"
+        }
+    ],
+    "billing": "PAY_PER_REQUEST"
+}

@@ -1,0 +1,52 @@
+{
+  "alb_dns_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "collections-agent-alb-1947078989.ap-south-1.elb.amazonaws.com"
+  },
+  "deployed_account_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "1140XXXXXXXX"
+  },
+  "dynamodb_dead_letters_table": {
+    "sensitive": false,
+    "type": "string",
+    "value": "collections-agent-dead-letters"
+  },
+  "dynamodb_ledger_table": {
+    "sensitive": false,
+    "type": "string",
+    "value": "collections-agent-event-ledger"
+  },
+  "ecr_repository_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "1140XXXXXXXX.dkr.ecr.ap-south-1.amazonaws.com/collections-agent"
+  },
+  "health_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "http://collections-agent-alb-1947078989.ap-south-1.elb.amazonaws.com/health"
+  },
+  "log_group": {
+    "sensitive": false,
+    "type": "string",
+    "value": "/ecs/collections-agent"
+  },
+  "metrics_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "http://collections-agent-alb-1947078989.ap-south-1.elb.amazonaws.com/metrics"
+  },
+  "service_url": {
+    "sensitive": false,
+    "type": "string",
+    "value": "http://collections-agent-alb-1947078989.ap-south-1.elb.amazonaws.com"
+  },
+  "store_backend": {
+    "sensitive": false,
+    "type": "string",
+    "value": "dynamodb"
+  }
+}

@@ -1,0 +1,46 @@
+# Live service responses through the ALB
+Captured: 2026-10-22T05:15:37Z
+NOTE: dependency_url was a PLACEHOLDER (https://replace-me.example.com).
+      No real or GPU-backed STT/LLM/TTS model was deployed. POST /calls
+      therefore exhausts retries and dead-letters, which is itself a valid
+      demonstration of the resilience path on real infrastructure.
+
+$ curl http://collections-agent-alb-1947078989.ap-south-1.elb.amazonaws.com/health
+{"status":"ok","circuit_state":"closed"}
+
+$ curl http://collections-agent-alb-1947078989.ap-south-1.elb.amazonaws.com/metrics
+{
+    "uptime_s": 885.3,
+    "in_flight": 0,
+    "max_in_flight_seen": 1,
+    "calls": {
+        "live:dead_lettered": 1
+    },
+    "calls_per_s": 0.001,
+    "dependency": {
+        "attempts": 3,
+        "failures": 3,
+        "retries": 2,
+        "circuit_rejections": 0,
+        "failure_rate": 1.0,
+        "failures_by_reason": {
+            "connection_error": 3
+        }
+    },
+    "final_call_failure_rate": 1.0,
+    "latency_ms": {
+        "count": 0,
+        "p50": null,
+        "p90": null,
+        "p99": null,
+        "max": null
+    },
+    "circuit": {
+        "state": "closed",
+        "transitions": []
+    },
+    "dlq": {
+        "depth": 0,
+        "counts": {}
+    }
+}
