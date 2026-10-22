@@ -48,7 +48,27 @@ demo you need one of the alternatives below.
 | **Kooha** | `sudo apt install kooha` | Simplest GUI with a mic toggle. Uses the portal, so expect one consent click. |
 | **OBS Studio** | `sudo apt install obs-studio` | Add a *Screen Capture (PipeWire)* source plus *Audio Input Capture*. More setup, far more control. |
 
-Neither is installed yet. Ask before installing if you are not sure.
+### OBS setup (chosen option)
+
+```bash
+sudo apt install obs-studio ffmpeg
+```
+
+Then, first launch:
+
+1. Skip the auto-configuration wizard, or choose **Optimize for recording**.
+2. In **Sources**, click **+** → **Screen Capture (PipeWire)**. A GNOME dialog asks
+   which screen to share — pick your monitor and click **Share**. That consent step
+   is required by the portal and cannot be scripted away.
+3. **+** → **Audio Input Capture** → your microphone. Speak and confirm the level
+   meter moves, *before* you record anything.
+4. **Settings → Output → Recording Format → MP4**, and set the recording path. If
+   you record MP4 directly you can skip the conversion step entirely.
+5. **Start Recording**, run the demo, **Stop Recording**.
+
+A caution specific to OBS: if it crashes mid-recording, an MKV file is recoverable
+but an MP4 is usually not. Recording to MKV and converting afterwards with
+`demo/convert-to-mp4.sh` is the safer path.
 
 ## Converting to MP4
 
@@ -61,8 +81,16 @@ ffmpeg -i ~/Videos/Screencasts/Screencast*.webm -c:v libx264 -crf 23 -c:a aac \
        demo/collections-agent-demo.mp4
 ```
 
-…or simply submit the `.webm`. It plays in every modern browser, and the assignment
-does not require a specific container.
+…or use the helper, which also verifies the result:
+
+```bash
+demo/convert-to-mp4.sh
+```
+
+It finds the newest recording in `~/Videos`, converts it, then reports duration,
+resolution, whether an audio track is present, and the file size — so you are not
+taking the output on trust. It warns if the result is under two minutes or would
+exceed GitHub's 100MB limit.
 
 ---
 
