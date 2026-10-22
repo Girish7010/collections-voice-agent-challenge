@@ -1,0 +1,47 @@
+# Teardown confirmation
+Executed: 2026-10-22T05:31:50Z
+Account:  1140XXXXXXXX   Region: ap-south-1   Workspace: default
+
+## Terraform
+Destroy ran from a reviewed saved plan (terraform plan -destroy -out=destroy.tfplan).
+Result: 43 of 43 resources destroyed.
+
+One resource needed a second pass. The ECR repository is declared with
+force_delete = false, so AWS refused to delete it while it still held the
+v0.1.0 image:
+
+    RepositoryNotEmptyException: The repository with name 'collections-agent'
+    cannot be deleted because it still contains images
+
+This is the intended safety behaviour, not a failure. The images were deleted
+explicitly (the manifest list first, which releases its child manifests), then
+the repository was destroyed. See 'ECR must be emptied first' in
+infra/terraform/README.md.
+
+Resources remaining in Terraform state:
+    0
+
+## Post-teardown sweep, ap-south-1
+load balancers             0
+NAT gateways               0
+elastic IPs                0
+EC2 instances              0
+EBS volumes                0
+ECS clusters               0
+DynamoDB tables            0
+ECR repositories           0
+CloudWatch log groups      0
+non-default VPCs           0
+
+One resource was NOT managed by Terraform and was removed by hand:
+  /aws/ecs/containerinsights/collections-agent/performance
+  A log group that Container Insights creates on the cluster's behalf when
+  containerInsights is enabled. 0 stored bytes. Confirmed ours by name
+  before deletion.
+
+## Cross-region check
+us-east-1, us-west-1, us-west-2, eu-west-1, ap-southeast-1: no load
+balancers, NAT gateways, EC2 instances or ECS clusters.
+
+## Conclusion
+No billable resources from this challenge remain running.

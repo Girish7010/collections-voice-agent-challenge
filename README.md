@@ -271,7 +271,9 @@ not attempted. Specifically:
   be swapped in, and why it needs an EC2/ECS GPU capacity provider rather than Fargate.
 - The Terraform in `infra/terraform/` is a complete, applied-and-verified ECS Fargate
   stack (`terraform validate` passes; it was deployed to ap-south-1, confirmed healthy,
-  and then destroyed). Evidence: [evidence/aws-deployment/](evidence/aws-deployment/).
+  and then destroyed). Evidence: [evidence/aws-deployment/](evidence/aws-deployment/),
+  including [teardown confirmation](evidence/aws-deployment/teardown.txt) showing no
+  billable resources remain.
 - It ran with a **placeholder dependency URL**, so the Appendix C traffic profile was
   never replayed against the deployed service. All load results here are local.
 - **Not built:** CloudWatch dashboard, and custom-metric autoscaling on in-flight calls

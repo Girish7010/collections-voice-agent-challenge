@@ -97,6 +97,49 @@ curl "$(terraform output -raw health_url)"
 - `.gitignore` here excludes `*.tfstate`, `terraform.tfvars` and `*.tfplan`. State holds
   resource attributes and can contain secrets.
 
+## Teardown
+
+```bash
+terraform plan -destroy -out=destroy.tfplan   # review it
+terraform apply destroy.tfplan
+```
+
+**ECR must be emptied first.** The repository is declared with
+`force_delete = false`, so a destroy fails while it still holds images:
+
+```
+RepositoryNotEmptyException: The repository with name 'collections-agent'
+cannot be deleted because it still contains images
+```
+
+That is deliberate — a repository full of images should not disappear because
+someone ran a destroy. Empty it explicitly, then re-run:
+
+```bash
+aws ecr batch-delete-image --repository-name collections-agent \
+  --image-ids "$(aws ecr list-images --repository-name collections-agent \
+                   --query 'imageIds[*]' --output json)"
+terraform destroy -target=aws_ecr_repository.app
+```
+
+Delete the manifest list before its children, or the child manifests fail with
+`ImageReferencedByManifestList`. Running the command twice handles it: the first
+pass removes the tagged manifest list, the second removes the orphans.
+
+**One resource is created outside Terraform.** Enabling `containerInsights` on the
+cluster makes ECS create `/aws/ecs/containerinsights/<cluster>/performance` on your
+behalf. Terraform never knew about it, so a destroy leaves it behind:
+
+```bash
+aws logs delete-log-group \
+  --log-group-name /aws/ecs/containerinsights/collections-agent/performance
+```
+
+Then confirm nothing billable survives — load balancers, NAT gateways, Elastic IPs,
+EC2 instances, EBS volumes, ECS clusters, DynamoDB tables, ECR repositories and log
+groups should all return zero. A worked example is in
+[`evidence/aws-deployment/teardown.txt`](../../evidence/aws-deployment/teardown.txt).
+
 ## Known gaps
 
 1. **HTTP only.** The listener is port 80. HTTPS needs an ACM certificate and a domain,
