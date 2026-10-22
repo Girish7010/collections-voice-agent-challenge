@@ -7,13 +7,20 @@
 
 If writing to the DLQ itself fails, the error is raised (the API returns 500)
 instead of being swallowed, so the caller knows the event was NOT stored.
+
+All SQLite work runs on ONE dedicated thread (`EventProcessor.db`). SQLite allows
+a single writer anyway; spreading writes over the default thread pool caused
+write-lock contention and GIL competition that starved the event loop under
+load (measured: 0.3 s pipeline calls observed as 2 s+ timeouts at ~65 calls/s).
 """
 
 from __future__ import annotations
 
 import asyncio
+import functools
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from enum import Enum
 
@@ -53,6 +60,7 @@ class EventProcessor:
         *,
         claim_lease_s: float = 30.0,
         max_concurrency: int = 200,
+        db_threads: int = 1,
     ):
         self.client = client
         self.ledger = ledger
@@ -60,10 +68,21 @@ class EventProcessor:
         self.metrics = metrics
         self.claim_lease_s = claim_lease_s
         self._bulkhead = asyncio.Semaphore(max_concurrency)
+        # One thread is mandatory for SQLite (concurrent schema init and the WAL
+        # pragma deadlock). DynamoDB calls are network round-trips, so a single
+        # thread would serialize them; Settings.db_threads widens the pool there.
+        self._db_thread = ThreadPoolExecutor(max_workers=db_threads, thread_name_prefix="store")
+
+    async def db(self, fn, *args, **kwargs):
+        """Run a blocking store call on the store thread pool."""
+        return await asyncio.get_running_loop().run_in_executor(self._db_thread, functools.partial(fn, *args, **kwargs))
+
+    def close(self) -> None:
+        self._db_thread.shutdown(wait=True)
 
     async def process(self, event: CallEvent, *, source: str = "live") -> ProcessOutcome:
         event_id = event.event_id
-        claim = await asyncio.to_thread(self.ledger.try_claim, event_id, self.claim_lease_s)
+        claim = await self.db(self.ledger.try_claim, event_id, self.claim_lease_s)
         if claim.result is ClaimResult.DUPLICATE:
             self.metrics.record_call("duplicate", source)
             return ProcessOutcome(ProcessStatus.DUPLICATE, event_id, result=claim.stored_result)
@@ -85,24 +104,24 @@ class EventProcessor:
                     "dependency_latency_ms": outcome.result.latency_ms,
                     "attempts": outcome.attempts,
                 }
-                await asyncio.to_thread(self.ledger.complete, event_id, result)
+                await self.db(self.ledger.complete, event_id, result)
                 resolved_by = "replay" if source == "replay" else "resubmission"
-                await asyncio.to_thread(self.dlq.resolve, event_id, resolved_by=resolved_by)
+                await self.db(self.dlq.resolve, event_id, resolved_by=resolved_by)
                 self.metrics.record_call("processed", source, elapsed_ms)
                 logger.info("call processed", extra={"event_id": event_id, "source": source,
                                                      "attempts": outcome.attempts, "latency_ms": round(elapsed_ms, 1)})
                 return ProcessOutcome(ProcessStatus.PROCESSED, event_id, outcome.attempts, result=result)
 
-            await asyncio.to_thread(self.dlq.add, event.model_dump(mode="json"),
+            await self.db(self.dlq.add, event.model_dump(mode="json"),
                                     reason=outcome.failure_reason, attempts=outcome.attempts)
-            await asyncio.to_thread(self.ledger.release, event_id)
+            await self.db(self.ledger.release, event_id)
             self.metrics.record_call("dead_lettered", source)
             logger.warning("call dead-lettered", extra={"event_id": event_id, "source": source,
                                                         "attempts": outcome.attempts, "reason": outcome.failure_reason})
             return ProcessOutcome(ProcessStatus.DEAD_LETTERED, event_id, outcome.attempts, outcome.failure_reason)
         except BaseException:
             logger.critical("event not persisted; releasing claim", extra={"event_id": event_id}, exc_info=True)
-            await asyncio.shield(asyncio.to_thread(self.ledger.release, event_id))
+            await asyncio.shield(self.db(self.ledger.release, event_id))
             raise
         finally:
             self.metrics.call_finished()
@@ -129,13 +148,13 @@ async def replay_dead_letters(
     if event_ids is not None:
         candidates = []
         for eid in event_ids:
-            row = await asyncio.to_thread(dlq.get, eid)
+            row = await processor.db(dlq.get, eid)
             if row is None:
                 summary["not_found"].append(eid)
             else:
                 candidates.append(row)
     else:
-        candidates = await asyncio.to_thread(dlq.list, "pending", limit)
+        candidates = await processor.db(dlq.list, "pending", limit)
 
     queue: asyncio.Queue = asyncio.Queue()
     for row in candidates:
@@ -148,22 +167,22 @@ async def replay_dead_letters(
                 row = queue.get_nowait()
             except asyncio.QueueEmpty:
                 return
-            if not await asyncio.to_thread(dlq.claim, row.event_id, lease_s):
+            if not await processor.db(dlq.claim, row.event_id, lease_s):
                 summary["skipped_claimed"] += 1
                 continue
             summary["attempted"] += 1
             try:
                 outcome = await processor.process(CallEvent.model_validate(row.payload), source="replay")
             except BaseException:
-                await asyncio.shield(asyncio.to_thread(dlq.unclaim, row.event_id))
+                await asyncio.shield(processor.db(dlq.unclaim, row.event_id))
                 raise
             if outcome.status is ProcessStatus.PROCESSED:
                 summary["resolved"] += 1
             elif outcome.status is ProcessStatus.DUPLICATE:
-                await asyncio.to_thread(dlq.resolve, row.event_id, resolved_by="already_processed")
+                await processor.db(dlq.resolve, row.event_id, resolved_by="already_processed")
                 summary["already_processed"] += 1
             elif outcome.status is ProcessStatus.IN_PROGRESS:
-                await asyncio.to_thread(dlq.unclaim, row.event_id)
+                await processor.db(dlq.unclaim, row.event_id)
                 summary["skipped_claimed"] += 1
             else:
                 summary["failed_again"] += 1
