@@ -203,6 +203,7 @@ pytest -m integration -q       # real uvicorn servers + traffic generator
 | Half-open recovery | `test_circuit_breaker.py::test_half_open_success_closes_and_resets_window`, `test_resilience.py::test_half_open_probe_success_recovers` |
 | Timeouts | `test_resilience.py::test_slow_attempt_times_out_and_is_retried` |
 | DLQ persistence | `test_dlq.py` (fresh instance reads the row back from disk; plain `sqlite3` can read it) |
+| DLQ write failure is never hidden | `test_event_processor.py::test_dlq_write_failure_is_raised_not_swallowed`, `test_api.py::test_dlq_write_failure_returns_500_and_never_claims_the_call_was_stored` |
 | DLQ replay | `test_event_processor.py::test_replay_*`, `test_api.py::test_replay_*` |
 | Idempotency | `test_event_processor.py::test_concurrent_duplicates_only_call_dependency_once`, `test_replaying_twice_does_not_process_twice`, `test_concurrent_replays_process_each_event_once` |
 | Load test (reproducible, seeded) | `tests/integration/test_end_to_end.py`: ramp with 20% failures loses 0 calls; outage opens the breaker and replay drains the DLQ |

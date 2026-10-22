@@ -11,7 +11,7 @@ that a reviewer needs.
 ```
 evidence/
 ├── round1/
-│   ├── test-run.txt                 full pytest output: 221 passed
+│   ├── test-run.txt                 full pytest output: 222 passed
 │   ├── test-run-header.txt          interpreter, platform, exact command
 │   └── load-tests/
 │       ├── full-day-24h/            24 sim hours @ 240x, no outage

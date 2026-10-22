@@ -120,7 +120,7 @@ say "Depth is zero. Replay is safe to run repeatedly: each record is claimed wit
 say "a conditional write, and the ledger blocks anything that already succeeded."
 
 step "10. Tests"
-say "Running the resilience and DLQ unit tests live (the full suite is 221 tests)."
+say "Running the resilience and DLQ unit tests live (the full suite is 222 tests)."
 run "$PY -m pytest -q tests/unit/test_circuit_breaker.py tests/unit/test_dlq.py tests/unit/test_resilience.py 2>&1 | tail -4"
 say "Full recorded run, every test, in evidence/round1/test-run.txt:"
 run "tail -2 evidence/round1/test-run.txt"

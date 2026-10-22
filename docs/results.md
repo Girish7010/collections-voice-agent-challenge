@@ -8,7 +8,7 @@ estimated or reconstructed. Reproduce with the commands in each section.
 ## 1. Automated tests
 
 ```
-221 passed in 54.61s
+222 passed in 39.87s
 ```
 
 Python 3.14.4, Linux. Full output: [`evidence/round1/test-run.txt`](../evidence/round1/test-run.txt).

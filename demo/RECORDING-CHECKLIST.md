@@ -222,7 +222,7 @@ python -m app.cli dlq replay --limit 100
 pytest -q
 ```
 
-**Expect:** `221 passed`. Mention the parity suite runs every storage assertion
+**Expect:** `222 passed`. Mention the parity suite runs every storage assertion
 against both SQLite and DynamoDB, so the two backends cannot drift.
 
 ## 8. Load test and measured numbers — 50s
