@@ -1,8 +1,9 @@
 # Copy to terraform.tfvars and adjust. Do not commit terraform.tfvars.
 
-# The account this stack may deploy into. Terraform refuses to apply anywhere else.
-# Digits only, no dashes: "1140-9164-2196" is written 114091642196.
-allowed_account_id = "114091642196"
+# The account this stack may deploy into. Terraform refuses to apply anywhere else,
+# so a stray profile cannot put this stack in the wrong account.
+# Digits only, no dashes.
+allowed_account_id = "000000000000"
 
 region  = "ap-south-1"
 project = "collections-agent"
