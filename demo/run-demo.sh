@@ -2,8 +2,16 @@
 # Drives the whole demo end to end against the real service, paced for screen
 # recording. Start your recorder, run this, narrate over it.
 #
-#   demo/run-demo.sh              # ~5 minutes, normal pacing
-#   PAUSE=0.5 demo/run-demo.sh    # faster, for a dry run
+# PAUSE controls the pacing. These are measured end-to-end runs on this machine,
+# not estimates:
+#   PAUSE=0.5    47s  (0m47s)  dry run, just checking it works
+#   PAUSE=2     137s  (2m17s)  brisk
+#   PAUSE=4     254s  (4m14s)  default, room to narrate over each step
+# Your own run will vary by a few seconds - the breaker recovery step waits a
+# fixed 9s, and the live pytest step depends on your machine.
+#
+#   demo/run-demo.sh              # default pacing
+#   PAUSE=0.5 demo/run-demo.sh    # quick dry run first
 #
 # Everything here is real: a real service, the real Appendix B mock, real HTTP
 # calls. Nothing is pre-recorded or faked. Localhost only - no credentials and
@@ -12,7 +20,7 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-PAUSE="${PAUSE:-2}"
+PAUSE="${PAUSE:-4}"
 PY="${PYTHON:-.venv/bin/python}"
 MOCK_PORT="${MOCK_PORT:-8201}"
 APP_PORT="${APP_PORT:-8200}"

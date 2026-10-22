@@ -19,7 +19,7 @@ All data is synthetic. Licensed under [Apache 2.0](LICENSE).
 - [Tests](#tests)
 - [Mock dependency](#mock-dependency-appendix-b)
 - [Scope and limitations](#scope-and-limitations)
-- [Measured results](docs/results.md) · [Runbook](docs/runbook.md) · [Evidence](evidence/)
+- [Demo](#demo) · [Measured results](docs/results.md) · [Runbook](docs/runbook.md) · [Evidence](evidence/)
 - [Cost analysis](docs/cost-analysis.md) · [Architecture and model swap](docs/architecture.md)
 
 ## Quick start
@@ -228,6 +228,25 @@ to check the percentiles. Measured over 20,000 samples
 No single lognormal with a 300 ms median hits both tails exactly. sigma = 0.60 matches the
 p99, which drives timeout and retry behaviour. To reproduce the PDF's value, set
 `MOCK_LATENCY_SIGMA=0.35`.
+
+## Demo
+
+`demo/run-demo.sh` walks the whole thing end to end against the real service in one
+command — a successful call, the same event returning `duplicate` from the idempotency
+ledger, retries exhausting into the dead-letter queue, the circuit breaker opening under
+a forced outage and recovering through half-open, DLQ inspection, replay to zero, a live
+test run, and the recorded load-test figures.
+
+```bash
+PAUSE=0.5 demo/run-demo.sh   # quick dry run, ~47s
+demo/run-demo.sh             # default pacing, room to narrate
+```
+
+It starts the mock and the service on ports 8201/8200, uses a temporary database, and
+cleans up on exit. Localhost only — no credentials and no AWS.
+
+A recorded video is **not** included in this repository. `demo/RECORDING-CHECKLIST.md`
+has the shot list and the recording setup for anyone who wants to produce one.
 
 ## Other deliverables
 
