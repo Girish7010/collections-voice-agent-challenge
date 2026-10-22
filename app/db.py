@@ -1,7 +1,7 @@
 """SQLite helpers shared by the DLQ and the idempotency ledger.
 
 One short-lived connection per operation keeps things thread-safe (calls run in
-worker threads via asyncio.to_thread). WAL mode lets readers (e.g. the CLI or
+a dedicated worker thread, see EventProcessor.db). WAL mode lets readers (e.g. the CLI or
 `sqlite3` in a terminal) inspect the file while the service writes to it.
 """
 

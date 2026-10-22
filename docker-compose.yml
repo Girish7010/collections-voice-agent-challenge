@@ -1,0 +1,22 @@
+services:
+  mock:
+    build: .
+    command: ["uvicorn", "mock_dependency.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment:
+      MOCK_FAILURE_RATE: "${MOCK_FAILURE_RATE:-0.20}"
+      MOCK_LATENCY_SIGMA: "${MOCK_LATENCY_SIGMA:-0.60}"
+    ports: ["8001:8000"]
+
+  app:
+    build: .
+    environment:
+      APP_DEPENDENCY_URL: http://mock:8000
+      APP_DB_PATH: /srv/data/collections.db
+    ports: ["8000:8000"]
+    volumes: ["app-data:/srv/data"]
+    depends_on:
+      mock:
+        condition: service_healthy
+
+volumes:
+  app-data:

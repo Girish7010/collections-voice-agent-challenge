@@ -49,8 +49,14 @@ RETRYABLE_STATUS = frozenset({429, 500, 502, 503, 504})
 class HttpPipelineAdapter:
     """Calls the Appendix B mock (or any service with the same HTTP contract)."""
 
-    def __init__(self, base_url: str, timeout_s: float, client: httpx.AsyncClient | None = None):
-        self._client = client or httpx.AsyncClient(base_url=base_url, timeout=timeout_s)
+    def __init__(self, base_url: str, timeout_s: float, client: httpx.AsyncClient | None = None,
+                 max_connections: int = 200):
+        # httpx keeps only 20 idle connections by default. Under ~60 concurrent calls
+        # that caused constant connect/teardown churn and saturated the CPU (measured
+        # with cProfile), turning 0.3 s mock calls into 2 s+ timeouts. Keep-alive
+        # capacity is therefore sized to the service's own concurrency limit.
+        limits = httpx.Limits(max_connections=max_connections, max_keepalive_connections=max_connections)
+        self._client = client or httpx.AsyncClient(base_url=base_url, timeout=timeout_s, limits=limits)
         self._timeout_s = timeout_s
 
     async def process(self, request: PipelineRequest) -> PipelineResult:

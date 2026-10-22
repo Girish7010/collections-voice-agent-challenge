@@ -14,6 +14,9 @@ gives p90 ~ 470 ms and p99 ~ 675 ms, short of the stated p90 ~ 700 / p99 ~ 1200 
 targets. sigma=0.60 gives p50 ~ 299, p90 ~ 645, p99 ~ 1207 ms, so it is the
 default here. Both values are configurable via environment variables.
 
+Test hook (not part of Appendix B): PUT /admin/failure-rate {"failure_rate": 1.0}
+changes the failure rate at runtime, so a load test can simulate an outage.
+
 Run:
     uvicorn mock_dependency.api:app --port 8001
 """
@@ -25,7 +28,7 @@ import logging
 import os
 import random
 from collections.abc import Awaitable, Callable
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -66,6 +69,10 @@ class MockConfig:
         )
 
 
+class FailureRateUpdate(BaseModel):
+    failure_rate: float = Field(ge=0.0, le=1.0, strict=True)
+
+
 class ProcessRequest(BaseModel):
     event_id: str = Field(min_length=1, strict=True)
     audio_ref: str = "synthetic"
@@ -81,17 +88,26 @@ def create_app(
     rng: random.Random | None = None,
     sleep: SleepFn = asyncio.sleep,
 ) -> FastAPI:
-    config = config or MockConfig()
-    rng = rng or random.Random(config.seed)
+    initial = config or MockConfig()
+    rng = rng or random.Random(initial.seed)
+    current = {"config": initial}  # replaced (not mutated) by the admin endpoint
 
     app = FastAPI(title="Mock STT/LLM/TTS dependency", version="0.1.0")
 
     @app.get("/health")
     async def health() -> dict:
-        return {"status": "ok", **asdict(config)}
+        return {"status": "ok", **asdict(current["config"])}
+
+    @app.put("/admin/failure-rate")
+    async def set_failure_rate(update: FailureRateUpdate) -> dict:
+        """Test hook: e.g. 1.0 simulates a full outage, then restore 0.2."""
+        current["config"] = replace(current["config"], failure_rate=update.failure_rate)
+        logger.warning("failure_rate set to %s", update.failure_rate)
+        return {"failure_rate": update.failure_rate}
 
     @app.post("/pipeline/process")
     async def process(req: ProcessRequest):
+        config = current["config"]
         # Decide outcome and latency up front, before awaiting, so a seeded RNG
         # yields a reproducible sequence regardless of request interleaving.
         failed = rng.random() < config.failure_rate

@@ -60,7 +60,7 @@ def create_app(settings: Settings | None = None, adapter: PipelineAdapter | None
 
     @app.get("/metrics")
     async def metrics() -> dict:
-        depth, counts = await asyncio.gather(asyncio.to_thread(c.dlq.depth), asyncio.to_thread(c.dlq.counts))
+        depth, counts = await asyncio.gather(c.processor.db(c.dlq.depth), c.processor.db(c.dlq.counts))
         return c.metrics.snapshot(circuit_state=c.breaker.state.value, dlq={"depth": depth, "counts": counts})
 
     @app.post("/calls")
@@ -73,13 +73,13 @@ def create_app(settings: Settings | None = None, adapter: PipelineAdapter | None
     @app.get("/dlq")
     async def list_dlq(status: str | None = Query(default=None, pattern="^(pending|replaying|resolved)$"),
                        limit: int = Query(default=50, ge=1, le=1000), offset: int = Query(default=0, ge=0)):
-        items = await asyncio.to_thread(c.dlq.list, status, limit, offset)
-        counts = await asyncio.to_thread(c.dlq.counts)
+        items = await c.processor.db(c.dlq.list, status, limit, offset)
+        counts = await c.processor.db(c.dlq.counts)
         return {"counts": counts, "items": [i.to_dict() for i in items]}
 
     @app.get("/dlq/{event_id}")
     async def get_dlq(event_id: str):
-        row = await asyncio.to_thread(c.dlq.get, event_id)
+        row = await c.processor.db(c.dlq.get, event_id)
         if row is None:
             raise HTTPException(status_code=404, detail="not in dead-letter queue")
         return row.to_dict()

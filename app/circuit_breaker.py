@@ -12,8 +12,12 @@ HALF_OPEN  Up to `half_open_max_calls` probe requests are let through. A probe
 Why a failure *rate* over a window and not "N consecutive failures": the mock
 fails ~20% of requests independently. Under concurrency, short runs of
 consecutive failures happen by chance and would trip a consecutive-count
-breaker during normal operation. A 50% threshold over 20 calls tolerates the
-normal 20% but trips quickly on a real outage.
+breaker during normal operation.
+
+Window size was tuned from a measured load test: with 20 calls, P(>=50%
+failures | 20% failure rate) is ~0.26% per window position, and the breaker
+falsely opened twice in a ~1,000-call run. With 50 calls it is ~2e-6, while a
+real outage (100% failures) still opens it after `min_calls` = 20 attempts.
 
 Single-threaded asyncio use only: no method awaits, so no locking is needed.
 """
@@ -40,8 +44,8 @@ class CircuitBreaker:
         self,
         *,
         failure_rate_threshold: float = 0.5,
-        window_size: int = 20,
-        min_calls: int = 10,
+        window_size: int = 50,
+        min_calls: int = 20,
         open_duration_s: float = 10.0,
         half_open_max_calls: int = 1,
         clock: Callable[[], float] = time.monotonic,

@@ -190,3 +190,24 @@ def test_config_reads_environment(monkeypatch):
 def test_config_rejects_out_of_range_failure_rate(rate):
     with pytest.raises(ValueError):
         MockConfig(failure_rate=rate)
+
+
+def test_admin_can_change_failure_rate_at_runtime():
+    """Used by the load test to simulate an outage (failure_rate=1.0) and recovery."""
+    client = make_client(failure_rate=0.0)
+
+    resp = client.put("/admin/failure-rate", json={"failure_rate": 1.0})
+
+    assert resp.status_code == 200
+    assert resp.json() == {"failure_rate": 1.0}
+    assert client.get("/health").json()["failure_rate"] == 1.0
+    assert client.post("/pipeline/process", json=VALID_BODY).status_code == 503
+
+    client.put("/admin/failure-rate", json={"failure_rate": 0.0})
+    assert client.post("/pipeline/process", json=VALID_BODY).status_code == 200
+
+
+@pytest.mark.parametrize("rate", [-0.1, 1.5, "high"])
+def test_admin_rejects_invalid_failure_rate(rate):
+    client = make_client(failure_rate=0.2)
+    assert client.put("/admin/failure-rate", json={"failure_rate": rate}).status_code == 422
