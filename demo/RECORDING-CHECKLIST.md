@@ -1,46 +1,97 @@
 # Demo recording checklist (~5 minutes)
 
-**No video has been recorded.** This environment has no screen-recording software
-installed (`ffmpeg`, `wf-recorder`, `obs`, `asciinema` are all absent) and no way to
-capture narration audio. This file is the shot-by-shot script to record it yourself.
+**No video has been recorded yet.** Recording on this machine cannot be fully
+automated — see *Why* below. Everything else is prepared: `demo/run-demo.sh` drives
+the entire demonstration against the real service, so recording is three actions:
+start the recorder, run one command, narrate.
 
-Do not add a video link to the README until a file actually exists and plays.
+---
+
+## Why `wf-recorder` fails here
+
+```
+$ wf-recorder -f out.mp4
+compositor doesn't support wlr-screencopy-unstable-v1
+```
+
+This is not a path or working-directory problem. `wf-recorder` captures via
+`wlr-screencopy-unstable-v1`, a **wlroots** protocol used by sway, Hyprland, Wayfire
+and river. This machine runs **GNOME Shell 50.1 (Mutter)** on Ubuntu, which does not
+implement that protocol and never will — GNOME captures through
+`xdg-desktop-portal` + PipeWire instead. No configuration makes `wf-recorder` work
+here; it is the wrong tool for this compositor.
+
+The legacy `org.gnome.Shell.Screencast` D-Bus API, which used to allow scripted
+recording, exports no interfaces in GNOME 50. And the ScreenCast portal deliberately
+requires an interactive consent dialog before any application may capture the
+screen. **That consent click is a security boundary — it is why an agent cannot
+start the recording for you, and it should not be bypassed.**
 
 ---
 
-## 0. Setup (before recording)
+## Recommended: GNOME's built-in recorder (nothing to install)
 
-The session is **Wayland** (`XDG_SESSION_TYPE=wayland`), so install one of:
+Verified present on this system (`show-screen-recording-ui = ['<Ctrl><Shift><Alt>R']`).
+
+1. Press **Ctrl + Alt + Shift + R**. A red dot appears in the top bar.
+2. Run the demo (below).
+3. Press **Ctrl + Alt + Shift + R** again to stop.
+4. The file lands in `~/Videos/Screencasts/` as `.webm`.
+
+**Limitation: the built-in recorder captures no microphone audio.** For a narrated
+demo you need one of the alternatives below.
+
+## If you want narration
+
+| Tool | Install | Notes |
+|---|---|---|
+| **Kooha** | `sudo apt install kooha` | Simplest GUI with a mic toggle. Uses the portal, so expect one consent click. |
+| **OBS Studio** | `sudo apt install obs-studio` | Add a *Screen Capture (PipeWire)* source plus *Audio Input Capture*. More setup, far more control. |
+
+Neither is installed yet. Ask before installing if you are not sure.
+
+## Converting to MP4
+
+The task asks for `demo/collections-agent-demo.mp4`, but GNOME records `.webm`.
+`ffmpeg` is **not installed** on this machine. Either:
 
 ```bash
-sudo apt install wf-recorder     # simplest, Wayland-native
-# or
-sudo apt install obs-studio      # if you want webcam + scene control
+sudo apt install ffmpeg
+ffmpeg -i ~/Videos/Screencasts/Screencast*.webm -c:v libx264 -crf 23 -c:a aac \
+       demo/collections-agent-demo.mp4
 ```
 
-Record screen + microphone with `wf-recorder`:
-
-```bash
-wf-recorder -a -f demo/collections-agent-demo.mp4
-# Ctrl-C to stop
-```
-
-Preparation:
-
-```bash
-cd collections-voice-agent-challenge
-source .venv/bin/activate
-rm -f data/collections.db          # start with an empty DLQ so the demo is clean
-clear                              # and set the terminal font large enough to read
-```
-
-**Before you hit record, check the frame for:** AWS keys, `.env` contents,
-`terraform.tfvars`, your account ID, and any personal paths you would rather not
-publish. The repo is public under Apache 2.0.
+…or simply submit the `.webm`. It plays in every modern browser, and the assignment
+does not require a specific container.
 
 ---
+
+## Running the demo
+
+A single script drives all of it against the real service — real HTTP calls, real
+retries, a real circuit breaker, a real DLQ. Nothing pre-recorded:
+
+```bash
+cd /home/neo/SRE/collections-voice-agent-challenge
+demo/run-demo.sh
+```
+
+It prints a captioned banner for each section and paces itself for narration
+(`PAUSE=0.5 demo/run-demo.sh` for a quick dry run first — do one, so you know the
+rhythm before recording). It starts the mock and the service on ports 8201/8200,
+uses a temporary database, and cleans up on exit. It touches no credentials and no
+AWS.
+
+**Before you hit record:** maximise the terminal, increase the font size until the
+text is comfortably legible, and check nothing sensitive is on screen or in your
+shell history.
+
+The twelve sections the script walks through map to the shots below. Narrate over
+it using these notes.
 
 ## 1. Project and architecture — 40s
+
+*(The script covers sections 1-2 here.)*
 
 Show `README.md` top section and `docs/architecture.md`.
 
