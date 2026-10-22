@@ -27,11 +27,12 @@ def event(i=1):
             "product_type": "bnpl", "timestamp": "2026-09-01T09:03:12Z", "outcome": "connected"}
 
 
-def make(tmp_path, **overrides):
+def make(tmp_path, *, raise_server_exceptions=True, **overrides):
     settings = Settings(**{"db_path": str(tmp_path / "api.db"), "base_delay_s": 0, "max_delay_s": 0,
                            "cb_window": 4, "cb_min_calls": 4, "cb_open_s": 60, **overrides})
     adapter = SwitchableAdapter()
-    return TestClient(create_app(settings, adapter=adapter)), adapter
+    app = create_app(settings, adapter=adapter)
+    return TestClient(app, raise_server_exceptions=raise_server_exceptions), adapter
 
 
 @pytest.fixture
@@ -96,6 +97,27 @@ def test_failed_call_returns_202_dead_lettered_and_is_inspectable(setup):
 def test_unknown_dlq_entry_is_404(setup):
     client, _ = setup
     assert client.get("/dlq/nope").status_code == 404
+
+
+def test_dlq_write_failure_returns_500_and_never_claims_the_call_was_stored(tmp_path):
+    """If the dead letter itself cannot be written, the sender must be told.
+
+    A 202 here would be a lie: it promises the call is safely queued for replay
+    when nothing was persisted, which is exactly the silent loss this service
+    exists to prevent.
+    """
+    client, adapter = make(tmp_path, raise_server_exceptions=False)
+    with client:
+        adapter.failing = True
+
+        def broken_add(*args, **kwargs):
+            raise OSError("disk full")
+
+        client.app.state.components.dlq.add = broken_add
+
+        resp = client.post("/calls", json=event())
+
+        assert resp.status_code == 500
 
 
 def test_replay_endpoint_resolves_dead_letters(setup):
