@@ -29,70 +29,48 @@ start the recording for you, and it should not be bypassed.**
 
 ---
 
-## Recommended: GNOME's built-in recorder (nothing to install)
+## OBS Studio — installed and pre-configured
 
-Verified present on this system (`show-screen-recording-ui = ['<Ctrl><Shift><Alt>R']`).
+`obs-studio 32.1.0` and `ffmpeg 8.0.1` are installed. OBS has been pre-configured, so
+there is no Settings navigation to do:
 
-1. Press **Ctrl + Alt + Shift + R**. A red dot appears in the top bar.
-2. Run the demo (below).
-3. Press **Ctrl + Alt + Shift + R** again to stop.
-4. The file lands in `~/Videos/Screencasts/` as `.webm`.
+| Setting | Value |
+|---|---|
+| Profile / Scene collection | `CollectionsDemo` |
+| Scene | `Demo`, containing *Screen (PipeWire)* and *Microphone* |
+| Recording format | MKV (survives a crash; MP4 usually does not) |
+| Recording path | `demo/` in this repository |
+| Video | 1920×1080 @ 30fps, x264 |
+| Audio | 48kHz stereo, default input |
 
-**Limitation: the built-in recorder captures no microphone audio.** For a narrated
-demo you need one of the alternatives below.
+### Recording
 
-## If you want narration
+1. Launch **OBS**. It opens on the `Demo` scene with both sources already present.
+2. A GNOME dialog asks **which screen to share** — choose your monitor and click
+   **Share**. This appears because the ScreenCast portal requires explicit consent;
+   it cannot be scripted away, and tick *Remember* if offered so it stops asking.
+3. Check the **Microphone** level meter moves when you speak. If it does not, right
+   click the source → *Properties* → pick the correct device. The laptop's built-in
+   mic is exposed by PipeWire as `alsa_input...Mic1__source`.
+4. **Start Recording**, run the demo below, **Stop Recording**.
+5. The MKV lands in `demo/`.
 
-| Tool | Install | Notes |
-|---|---|---|
-| **Kooha** | `sudo apt install kooha` | Simplest GUI with a mic toggle. Uses the portal, so expect one consent click. |
-| **OBS Studio** | `sudo apt install obs-studio` | Add a *Screen Capture (PipeWire)* source plus *Audio Input Capture*. More setup, far more control. |
-
-### OBS setup (chosen option)
-
-```bash
-sudo apt install obs-studio ffmpeg
-```
-
-Then, first launch:
-
-1. Skip the auto-configuration wizard, or choose **Optimize for recording**.
-2. In **Sources**, click **+** → **Screen Capture (PipeWire)**. A GNOME dialog asks
-   which screen to share — pick your monitor and click **Share**. That consent step
-   is required by the portal and cannot be scripted away.
-3. **+** → **Audio Input Capture** → your microphone. Speak and confirm the level
-   meter moves, *before* you record anything.
-4. **Settings → Output → Recording Format → MP4**, and set the recording path. If
-   you record MP4 directly you can skip the conversion step entirely.
-5. **Start Recording**, run the demo, **Stop Recording**.
-
-A caution specific to OBS: if it crashes mid-recording, an MKV file is recoverable
-but an MP4 is usually not. Recording to MKV and converting afterwards with
-`demo/convert-to-mp4.sh` is the safer path.
-
-## Converting to MP4
-
-The task asks for `demo/collections-agent-demo.mp4`, but GNOME records `.webm`.
-`ffmpeg` is **not installed** on this machine. Either:
-
-```bash
-sudo apt install ffmpeg
-ffmpeg -i ~/Videos/Screencasts/Screencast*.webm -c:v libx264 -crf 23 -c:a aac \
-       demo/collections-agent-demo.mp4
-```
-
-…or use the helper, which also verifies the result:
+### Converting
 
 ```bash
 demo/convert-to-mp4.sh
 ```
 
-It finds the newest recording in `~/Videos`, converts it, then reports duration,
-resolution, whether an audio track is present, and the file size — so you are not
-taking the output on trust. It warns if the result is under two minutes or would
-exceed GitHub's 100MB limit.
+Finds the newest recording, converts to `demo/collections-agent-demo.mp4`, then
+reports duration, resolution, whether an audio track is present, and file size — so
+the result is verified rather than assumed.
 
----
+### If OBS gives you trouble
+
+GNOME's built-in recorder is the zero-dependency fallback: **Ctrl + Alt + Shift + R**
+starts and stops it, and the file lands in `~/Videos/Screencasts/` as `.webm`. It
+captures **no microphone audio**, so the video would be silent — acceptable only
+because `run-demo.sh` prints a caption for every section.
 
 ## Running the demo
 

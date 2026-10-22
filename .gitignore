@@ -11,6 +11,11 @@ venv/
 *.pem
 .aws/
 
+# Screen recordings. The intermediate MKV from OBS is large and disposable;
+# the final MP4 is committed only if it fits under GitHub's 100MB limit.
+demo/*.mkv
+demo/*.webm
+
 # Local data / generated artifacts
 *.db
 *.sqlite
