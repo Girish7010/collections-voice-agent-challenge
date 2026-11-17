@@ -27,7 +27,7 @@ All data is synthetic. Licensed under [Apache 2.0](LICENSE).
 Prerequisites: Python 3.11+ (developed on 3.14, CI on 3.12) and `curl`. Docker is
 optional. No AWS account is needed.
 
-```bash
+bash
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements-dev.txt
 pytest -q                                   # unit + integration + end-to-end tests
